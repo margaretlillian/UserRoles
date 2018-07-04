@@ -31,8 +31,8 @@ namespace UserRoles
 
             IdentityResult roleResult;
             //Adding Addmin Role  
-            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
-            if (!roleCheck)
+            var adminRoleCheck = await RoleManager.RoleExistsAsync("Admin");
+            if (!adminRoleCheck)
             {
                 //create the roles and seed them to the database  
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
@@ -41,6 +41,22 @@ namespace UserRoles
             ApplicationUser user = await UserManager.FindByEmailAsync("thing@thing.thing");
             var User = new ApplicationUser();
             await UserManager.AddToRoleAsync(user, "Admin");
+
+            var employeeRoleCheck = await RoleManager.RoleExistsAsync("Employee");
+            if (!employeeRoleCheck)
+            {
+                //create the roles and seed them to the database  
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Employee"));
+            }
+
+            var volunteerRoleCheck = await RoleManager.RoleExistsAsync("Volunteer");
+            if (!volunteerRoleCheck)
+            {
+                //create the roles and seed them to the database  
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Volunteer"));
+            }
+
+
 
         }
         // This method gets called by the runtime. Use this method to add services to the container.
