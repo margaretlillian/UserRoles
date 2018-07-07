@@ -34,10 +34,8 @@ namespace UserRoles
             var adminRoleCheck = await RoleManager.RoleExistsAsync("Admin");
             if (!adminRoleCheck)
             {
-                //create the roles and seed them to the database  
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
             }
-            //Assign Admin role to the main User here we have given our newly loregistered login id for Admin management  
             ApplicationUser user = await UserManager.FindByEmailAsync("thing@thing.thing");
             var User = new ApplicationUser();
             await UserManager.AddToRoleAsync(user, "Admin");
@@ -45,14 +43,12 @@ namespace UserRoles
             var employeeRoleCheck = await RoleManager.RoleExistsAsync("Employee");
             if (!employeeRoleCheck)
             {
-                //create the roles and seed them to the database  
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Employee"));
             }
 
             var volunteerRoleCheck = await RoleManager.RoleExistsAsync("Volunteer");
             if (!volunteerRoleCheck)
             {
-                //create the roles and seed them to the database  
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Volunteer"));
             }
 
