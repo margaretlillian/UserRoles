@@ -36,7 +36,7 @@ namespace UserRoles
             {
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
             }
-            ApplicationUser user = await UserManager.FindByEmailAsync("thing@thing.thing");
+            ApplicationUser user = await UserManager.FindByEmailAsync("admin@admin.admin");
             var User = new ApplicationUser();
             await UserManager.AddToRoleAsync(user, "Admin");
 
