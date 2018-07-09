@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using UserRoles.Data;
 using UserRoles.Models;
 using UserRoles.Models.AccountViewModels;
 using UserRoles.Services;
@@ -20,6 +21,10 @@ namespace UserRoles.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
+
+        private readonly ApplicationDbContext context;
+
+        
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -29,12 +34,15 @@ namespace UserRoles.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ApplicationDbContext applicationDbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            context = applicationDbContext;
+
         }
 
         [TempData]
@@ -155,7 +163,6 @@ namespace UserRoles.Controllers
             }
 
             ViewData["ReturnUrl"] = returnUrl;
-
             return View();
         }
 
@@ -206,16 +213,24 @@ namespace UserRoles.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult Register(string returnUrl = null)
+        public IActionResult CreateUser(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            var roles = context.Roles.ToList();
+            RegisterViewModel model = new RegisterViewModel();
+            model.Roles = roles.Select(r =>
+            new SelectListItem
+            { Value = r.Id,
+            Text = r.Name
+            });
+
+            return View(model);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> CreateUser(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
