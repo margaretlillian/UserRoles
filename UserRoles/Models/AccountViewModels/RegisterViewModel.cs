@@ -27,7 +27,7 @@ namespace UserRoles.Models.AccountViewModels
         public string ConfirmPassword { get; set; }
 
         public IEnumerable<SelectListItem> Roles { get; set; }
-        public int RoleID { get; set; }
+        public string RoleID { get; set; }
 
 
 

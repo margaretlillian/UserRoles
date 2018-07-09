@@ -220,7 +220,7 @@ namespace UserRoles.Controllers
             RegisterViewModel model = new RegisterViewModel();
             model.Roles = roles.Select(r =>
             new SelectListItem
-            { Value = r.Id,
+            { Value = r.Name,
             Text = r.Name
             });
 
@@ -239,6 +239,7 @@ namespace UserRoles.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, model.RoleID);
                     _logger.LogInformation("User created a new account with password.");
                     
                     _logger.LogInformation("User created a new account with password.");
