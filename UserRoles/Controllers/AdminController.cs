@@ -11,9 +11,16 @@ using UserRoles.Models.AccountViewModels;
 
 namespace UserRoles.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+
+        private readonly ApplicationDbContext context;
+
+        public AdminController(ApplicationDbContext applicationDbContext)
+        {
+            context = applicationDbContext;
+        }
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View();
@@ -27,6 +34,9 @@ namespace UserRoles.Controllers
         }
 
 
-        
-    }
+        public IActionResult Thing(string roleId)
+        {
+            return View();
+        }
+        }
 }

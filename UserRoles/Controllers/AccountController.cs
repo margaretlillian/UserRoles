@@ -217,12 +217,15 @@ namespace UserRoles.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
             var roles = context.Roles.ToList();
-            RegisterViewModel model = new RegisterViewModel();
-            model.Roles = roles.Select(r =>
+            RegisterViewModel model = new RegisterViewModel()
+            {
+                Roles = roles.Select(r =>
             new SelectListItem
-            { Value = r.Name,
-            Text = r.Name
-            });
+            {
+                Value = r.Name,
+                Text = r.Name
+            })
+            };
 
             return View(model);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserRoles.Models;
 
@@ -15,7 +16,8 @@ namespace UserRoles.Controllers
             return View();
         }
 
-        public IActionResult About()
+        [Authorize(Roles = "Employee")]
+        public IActionResult EmployeePage()
         {
             ViewData["Message"] = "Your application description page.";
 

@@ -490,8 +490,7 @@ namespace UserRoles.Controllers
 
             return View(nameof(ShowRecoveryCodes), model);
         }
-
-        #region Helpers
+                #region Helpers
 
         private void AddErrors(IdentityResult result)
         {

@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<h1 style="font-size: 400px;">
+<ul style="font-size: 80px;">
+
+    <li>
 <a asp-controller="Account" asp-action="CreateUser">Create User</a>
-</h1>
+        </li>
+    <li><a asp-controller="Admin" asp-action="Index">SPECIAL ADMIN PAGE</a></li>
+    <li><a asp-controller="Home" asp-action="EmployeePage">Special Employee Page</a></li>
+</ul>
