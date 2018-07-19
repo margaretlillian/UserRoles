@@ -1,0 +1,9 @@
+﻿@model List<IdentityRole>
+
+<h2>All Roles</h2>
+<ul>
+@foreach (var x in Model) { 
+
+    <li><a asp-action="ManageUsers" asp-controller="Admin" asp-route-roleId="@x.Name">@x.Name</a></li>
+}
+</ul>

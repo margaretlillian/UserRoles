@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UserRoles.Data;
 using UserRoles.Models;
 using UserRoles.Models.AccountViewModels;
+using UserRoles.Models.AdminViewModels;
 
 namespace UserRoles.Controllers
 {
@@ -34,9 +37,17 @@ namespace UserRoles.Controllers
         }
 
 
+        public IActionResult ManageUsers(string roleId)
+        {
+            var roles = context.Roles.ToList();
+            return View(roles);
+        }
+
         public IActionResult Thing(string roleId)
         {
-            return View();
+            var thing = context.Users.Include(u => u.UserRoles).ToList();
+            return View(thing);
+
         }
-        }
+    }
 }
