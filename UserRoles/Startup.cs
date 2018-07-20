@@ -52,6 +52,12 @@ namespace UserRoles
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Volunteer"));
             }
 
+            var deactivatedRoleCheck = await RoleManager.RoleExistsAsync("Deactivated");
+            if (!volunteerRoleCheck)
+            {
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Deactivated"));
+            }
+
 
 
         }
