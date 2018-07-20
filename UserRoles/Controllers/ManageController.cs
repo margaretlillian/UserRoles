@@ -490,8 +490,17 @@ namespace UserRoles.Controllers
 
             return View(nameof(ShowRecoveryCodes), model);
         }
-        
-                #region Helpers
+
+        public IActionResult Deactivate(string userId)
+        {
+            var user = _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return Redirect("/");
+            return View(user);
+
+        }
+
+        #region Helpers
 
         private void AddErrors(IdentityResult result)
         {

@@ -1,12 +1,18 @@
 ﻿@using UserRoles.Models.AdminViewModels
 @model List<ViewUsersViewModel>
 
-<h2>Manage </h2>
-
+<h2>Manage These People </h2>
+<table>
+    
 @foreach (var thing in Model)
-{
-    @thing.Email
-    @thing.UserId
-    @thing.Username
+
+{<tr>
+    <td>
+    @thing.Username 
+        </td>
+    <td><a href="#">Edit Information</a></td>
+    
+    </tr>
 
 }
+    </table>
