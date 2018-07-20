@@ -45,7 +45,15 @@ namespace UserRoles.Controllers
 
         public IActionResult Thing(string roleId)
         {
-            var thing = context.Users.Include(u => u.UserRoles).ToList();
+            var thing = (from ur in context.UserRoles
+                         join u in context.Users on ur.UserId equals u.Id
+                         where ur.RoleId == roleId
+                         select new ViewUsersViewModel() {
+                             Email = u.Email,
+                             Username = u.UserName,
+                             UserId = u.Id
+
+                         }).ToList();
             return View(thing);
 
         }
