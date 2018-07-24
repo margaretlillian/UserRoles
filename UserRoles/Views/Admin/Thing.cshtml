@@ -1,18 +1,25 @@
 ﻿@using UserRoles.Models.AdminViewModels
 @model List<ViewUsersViewModel>
 
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <h2>Manage These People </h2>
 <table>
-    
-@foreach (var thing in Model)
 
-{<tr>
-    <td>
-    @thing.Username 
-        </td>
-    <td><a href="#">Edit Information</a></td>
-    
-    </tr>
+    @foreach (var thing in Model)
 
-}
-    </table>
+    {
+        @if (thing.Username != UserManager.GetUserName(User))
+        {
+            <tr>
+                <td>
+                    @thing.Username
+                </td>
+                <td><a asp-controller="Manage" asp-action="Deactivate" asp-route-userId="@thing.UserId">Deactivate</a></td>
+
+            </tr>
+            }
+
+        }
+</table>

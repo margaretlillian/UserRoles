@@ -40,6 +40,15 @@ namespace UserRoles
             var User = new ApplicationUser();
             await UserManager.AddToRoleAsync(user, "Admin");
 
+            var superAdminRoleCheck = await RoleManager.RoleExistsAsync("SuperAdmin");
+            if (!superAdminRoleCheck)
+            {
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+            }
+            ApplicationUser superUser = await UserManager.FindByEmailAsync("super.admin@admin.admin");
+            var SuperUser = new ApplicationUser();
+            await UserManager.AddToRoleAsync(superUser, "SuperAdmin");
+
             var employeeRoleCheck = await RoleManager.RoleExistsAsync("Employee");
             if (!employeeRoleCheck)
             {
@@ -53,7 +62,7 @@ namespace UserRoles
             }
 
             var deactivatedRoleCheck = await RoleManager.RoleExistsAsync("Deactivated");
-            if (!volunteerRoleCheck)
+            if (!deactivatedRoleCheck)
             {
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Deactivated"));
             }

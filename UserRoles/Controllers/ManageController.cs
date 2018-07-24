@@ -491,13 +491,39 @@ namespace UserRoles.Controllers
             return View(nameof(ShowRecoveryCodes), model);
         }
 
-        public IActionResult Deactivate(string userId)
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> Deactivate(string userId)
         {
-            var user = _userManager.FindByIdAsync(userId);
-            if (user == null)
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null || currentUser == user)
                 return Redirect("/");
             return View(user);
 
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Deactivate(ApplicationUser user)
+        {
+            ApplicationUser currentUser = await _userManager.FindByIdAsync(user.Id);
+            if (ModelState.IsValid)
+            {
+                var oldRole = await _userManager.GetRolesAsync(currentUser);
+                foreach (var thing in oldRole)
+                { if (thing == "SuperAdmin")
+                        return Redirect("/");
+
+                    await _userManager.RemoveFromRoleAsync(currentUser, thing);
+                }
+                return Redirect("/");
+            }
+            return View();
+            
+            
         }
 
         #region Helpers

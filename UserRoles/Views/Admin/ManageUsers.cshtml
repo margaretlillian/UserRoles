@@ -2,9 +2,11 @@
 
 <h2>All Roles</h2>
 <ul>
-@foreach (var x in Model) {
-
-        <li><a asp-action="Thing" asp-controller="Admin" asp-route-roleId="@x.Id">@x.Name</a></li>
-        
+    @foreach (var x in Model)
+    {
+        @if (x.Name != "SuperAdmin" && x.Name != "Admin")
+        {
+            <li><a asp-action="Thing" asp-controller="Admin" asp-route-roleId="@x.Id">@x.Name</a></li>
+        }
     }
 </ul>

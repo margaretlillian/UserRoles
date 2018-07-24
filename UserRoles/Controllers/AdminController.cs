@@ -37,7 +37,7 @@ namespace UserRoles.Controllers
         }
 
 
-        public IActionResult ManageUsers(string roleId)
+        public IActionResult ManageUsers()
         {
             var roles = context.Roles.ToList();
             return View(roles);
@@ -45,16 +45,22 @@ namespace UserRoles.Controllers
 
         public IActionResult Thing(string roleId)
         {
-            var thing = (from ur in context.UserRoles
-                         join u in context.Users on ur.UserId equals u.Id
-                         where ur.RoleId == roleId
-                         select new ViewUsersViewModel() {
-                             Email = u.Email,
-                             Username = u.UserName,
-                             UserId = u.Id
+            if (roleId != "fe031bbb-3141-420f-8a4a-7b0230799b19")
+            {
+                var thing = (from ur in context.UserRoles
+                             join u in context.Users on ur.UserId equals u.Id
+                             where ur.RoleId == roleId
+                             select new ViewUsersViewModel()
+                             {
+                                 Email = u.Email,
+                                 Username = u.UserName,
+                                 UserId = u.Id
 
-                         }).ToList();
-            return View(thing);
+                             }).ToList();
+                return View(thing);
+            }
+
+            return Redirect("ManageUsers");
 
         }
 
